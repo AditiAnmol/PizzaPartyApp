@@ -9,12 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.ceil
 
 /**
- * constant slices per pizza
- */
-const val SLICES_PER_PIZZA = 8
-
-/**
- * Main class for Pizza Party App
+ * Controller class for Pizza Party App
  */
 class MainActivity : AppCompatActivity() {
 
@@ -36,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         numAttendees = findViewById(R.id.peopleCount)
         totalPizzaCount = findViewById(R.id.totalPizza)
+        val totalText = getString(R.string.total_pizzas, 0)
+        totalPizzaCount.text = totalText
         howHungrySelection = findViewById(R.id.hungryRadioGroup)
     }
 
@@ -43,17 +40,25 @@ class MainActivity : AppCompatActivity() {
      * Calculates pizza count for each input
      */
     fun calculatePizza(view: View) {
+        // Get the text that was typed into the EditText
         val numAttendStr = numAttendees.text.toString()
-        val numAttend = numAttendStr.toInt()
 
-        val slicesPerPerson = when (howHungrySelection.checkedRadioButtonId) {
-            R.id.light_radio_button -> 2
-            R.id.medium_radio_button -> 3
-            else -> 4
+        // Convert the text into an integer
+        val numAttend = numAttendStr.toIntOrNull() ?: 0
+
+        // Get hunger level selection
+        val hungerLevel = when (howHungrySelection.checkedRadioButtonId) {
+            R.id.light_radio_button -> PizzaCalculator.HungerLevel.LIGHT
+            R.id.medium_radio_button -> PizzaCalculator.HungerLevel.MEDIUM
+            else -> PizzaCalculator.HungerLevel.RAVENOUS
         }
 
-        val totalPizzas = ceil(numAttend * slicesPerPerson /
-                SLICES_PER_PIZZA.toDouble()).toInt()
-        totalPizzaCount.text = "Total pizzas: $totalPizzas"
+        // Get the number of pizzas needed
+        val calc = PizzaCalculator(numAttend, hungerLevel)
+        val totalPizzas = calc.totalPizzas
+
+        // Place totalPizzas into the string resource and display
+        val totalText = getString(R.string.total_pizzas, totalPizzas)
+        totalPizzaCount.text = totalText
     }
 }
