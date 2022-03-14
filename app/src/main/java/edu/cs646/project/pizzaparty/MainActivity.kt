@@ -1,12 +1,10 @@
 package edu.cs646.project.pizzaparty
 
 import android.os.Bundle
-import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.math.ceil
 
 /**
  * Controller class for Pizza Party App
@@ -39,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Calculates pizza count for each input
      */
-    fun calculatePizza(view: View) {
+    fun calculatePizza() {
         // Get the text that was typed into the EditText
         val numAttendStr = numAttendees.text.toString()
 
