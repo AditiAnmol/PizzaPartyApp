@@ -77,8 +77,8 @@
 
     <Button
         android:id="@+id/calc_button"
-        android:layout_marginTop="@dimen/text_margin_top"
-        android:onClick="calculatePizza"
         style="@style/CalculateButtonStyle"
+        android:layout_marginTop="@dimen/text_margin_top"
+        android:onClick="calculateClick"
         android:text="@string/calculate" />
 </LinearLayout>
